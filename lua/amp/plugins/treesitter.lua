@@ -38,7 +38,6 @@ return {
             node_decremental = '<S-TAB>',
           },
         },
-
         -- rainbow = {
         --     enable = true,
         --     disable = { "html" },
