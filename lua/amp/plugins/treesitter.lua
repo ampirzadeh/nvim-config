@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     version = false,
-    event = { 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter' },
+    event = { "BufEnter", "BufAdd", "BufNew", "BufNewFile", "BufWinEnter" },
     build = ":TSUpdate",
     config = function()
       local treesitter = require("nvim-treesitter.configs")
@@ -36,10 +36,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = '<CR>',
-            scope_incremental = '<TAB>',
-            node_incremental = '<TAB>',
-            node_decremental = '<S-TAB>',
+            init_selection = "<CR>",
+            scope_incremental = "<TAB>",
+            node_incremental = "<TAB>",
+            node_decremental = "<S-TAB>",
           },
         },
         -- rainbow = {
@@ -64,6 +64,14 @@ return {
     end,
   },
   {
-    'nvim-treesitter/nvim-treesitter-context',
+    "nvim-treesitter/nvim-treesitter-context",
   },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring"
+  },
+  {
+    "folke/ts-comments.nvim",
+    event = { "BufEnter", "BufAdd", "BufNew", "BufNewFile", "BufWinEnter" },
+    opts = {},
+  }
 }
