@@ -7,7 +7,7 @@ global.mapleader = ","
 global.maplocalleader = "\\"
 
 -- Editor options
-
+o.showmode = false
 o.nu = true
 o.relativenumber = true
 
