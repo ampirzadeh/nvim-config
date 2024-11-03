@@ -1,6 +1,8 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    version = false,
+    event = { 'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter' },
     build = ":TSUpdate",
     config = function()
       local treesitter = require("nvim-treesitter.configs")
@@ -33,7 +35,7 @@ return {
           enable = true,
           keymaps = {
             init_selection = '<CR>',
-            scope_incremental = '<CR>',
+            scope_incremental = '<TAB>',
             node_incremental = '<TAB>',
             node_decremental = '<S-TAB>',
           },

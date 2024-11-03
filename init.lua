@@ -15,4 +15,5 @@ require("amp.lazy")
 require("amp.remaps")
 
 vim.cmd.colorscheme("tokyodark")
+
 require("nvim-tree").setup()
