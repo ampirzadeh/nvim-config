@@ -5,5 +5,4 @@ require("amp.settings")
 require("amp.lazy")
 require("amp.remaps")
 
-vim.cmd.colorscheme("tokyodark")
-
+vim.cmd.colorscheme("onedark")

@@ -1,11 +1,18 @@
+local transparent = {
+  transparent = true,
+  styles = {
+    sidebars = "transparent",
+    floats = "transparent"
+  }
+}
 return {
   {
-    "tiagovla/tokyodark.nvim",
-    lazy = false,
-    priority = 1000,
+    'navarasu/onedark.nvim',
+    opts = transparent
   },
   {
-    "olimorris/onedarkpro.nvim",
-    lazy = false
+    "catppuccin/nvim",
+    name = "catppuccin",
+    opts = transparent
   },
 }

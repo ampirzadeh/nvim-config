@@ -1,6 +1,8 @@
 return {
   "mbbill/undotree",
   config = function()
-    vim.keymap.set('n', 'U', vim.cmd.UndotreeToggle)
+    local Map = require("amp.remaps")
+
+    Map('n', 'U', ":UndotreeToggle<CR>")
   end,
 }

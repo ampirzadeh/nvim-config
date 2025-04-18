@@ -29,9 +29,9 @@ return {
           fields = { "kind", "abbr", "menu" },
           format = lspkind.cmp_format({ mode = "symbol" })
         },
-        experimental = {
-          ghost_text = true,
-        },
+        -- experimental = {
+        --   ghost_text = true,
+        -- },
         completion = {
           completeopt = 'menu,menuone,noinsert'
         },
@@ -46,7 +46,7 @@ return {
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-e>'] = cmp.mapping.abort(),
+          ['<Esc>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if luasnip.expandable() then
@@ -120,22 +120,25 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = 'LSP actions',
         callback = function(event)
+          local Map = require("amp.remaps")
           local opts = { buffer = event.buf }
 
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-          vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
-          vim.keymap.set("n", '<F2>', vim.lsp.buf.rename, opts)
-          vim.keymap.set({ "n", "x" }, '<A-x>', function() vim.lsp.buf.format { async = true } end, opts)
-          vim.keymap.set("n", '<F4>', vim.lsp.buf.code_action, opts)
+          Map("n", "<leader>d", vim.diagnostic.open_float, opts)
+          Map("n", "K", vim.lsp.buf.hover, opts)
+          Map("n", "gd", vim.lsp.buf.definition, opts)
+          Map("n", "gD", vim.lsp.buf.declaration, opts)
+          Map("n", "gi", vim.lsp.buf.implementation, opts)
+          Map("n", "go", vim.lsp.buf.type_definition, opts)
+          Map("n", "gr", vim.lsp.buf.references, opts)
+          Map("n", "gs", vim.lsp.buf.signature_help, opts)
+          Map("n", '<F2>', vim.lsp.buf.rename, opts)
+          Map("n", '<A-x>', function() vim.lsp.buf.format { async = true } end, opts)
+          Map("n", '<F4>', vim.lsp.buf.code_action, opts)
         end,
       })
 
       require('mason-lspconfig').setup({
+        automatic_installation = true,
         ensure_installed = {},
         handlers = {
           -- this first function is the "default handler"
@@ -143,6 +146,21 @@ return {
           function(server_name)
             require("lspconfig")[server_name].setup({})
           end,
+          ['lua_ls'] = function()
+            require('lspconfig').lua_ls.setup({
+              settings = {
+                Lua = {
+                  runtime = { version = 'LuaJIT' },
+                  diagnostics = { globals = { 'vim' } },
+                  workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false,
+                  },
+                  telemetry = { enable = false },
+                },
+              },
+            })
+          end
         }
       })
     end

@@ -1,10 +1,9 @@
-local global = vim.g
+local g = vim.g
 local o = vim.opt
 
 -- Global options
-
-global.mapleader = ","
-global.maplocalleader = "\\"
+g.mapleader = " "
+g.maplocalleader = ","
 
 -- Editor options
 o.showmode = false
@@ -17,6 +16,7 @@ o.shiftwidth = 2
 o.tabstop = 2
 o.smartindent = true
 o.wrap = false
+o.whichwrap = o.whichwrap + "hl"
 
 o.swapfile = false
 o.backup = false
@@ -26,7 +26,7 @@ o.undofile = true
 o.hlsearch = false
 o.incsearch = true
 
-o.scrolloff = 10
+o.scrolloff = 4
 
 o.cursorline = true
 o.clipboard = "unnamedplus"

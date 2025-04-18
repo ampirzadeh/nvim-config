@@ -7,10 +7,17 @@ return {
     config = function()
       local treesitter = require("nvim-treesitter.configs")
 
+      ---@diagnostic disable-next-line: missing-fields
       treesitter.setup({
-        auto_install = true,
         highlight = {
           enable = true,
+          disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
+          end,
           additional_vim_regex_highlighting = false,
         },
         indent = { enable = true },
@@ -43,16 +50,6 @@ return {
             node_decremental = "<S-TAB>",
           },
         },
-        -- rainbow = {
-        --     enable = true,
-        --     disable = { "html" },
-        --     extended_mode = false,
-        --     max_file_lines = nil,
-        -- },
-        -- context_commentstring = {
-        --     enable = true,
-        --     enable_autocmd = false,
-        -- },
       })
 
       vim.diagnostic.config({
@@ -67,12 +64,4 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
   },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring"
-  },
-  {
-    "folke/ts-comments.nvim",
-    event = { "BufEnter", "BufAdd", "BufNew", "BufNewFile", "BufWinEnter" },
-    opts = {},
-  }
 }
