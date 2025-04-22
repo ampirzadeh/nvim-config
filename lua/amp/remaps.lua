@@ -7,7 +7,7 @@ function Map(mode, lhs, rhs, opts)
 end
 
 Map("n", ";", ":")
-Map("n", "<C-s>", ":w<CR>")
+Map({ "i", "n" }, "<C-s>", "<Esc>:w<CR>")
 
 Map('i', '<C-v>', '<C-r>+')
 
