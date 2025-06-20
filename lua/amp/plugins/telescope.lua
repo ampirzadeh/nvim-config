@@ -45,6 +45,7 @@ return {
         { desc = 'Telescope open project' })
       Map('n', '<C-b>', extensions.file_browser.file_browser, { desc = 'Telescope file browser' })
       Map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+      Map('n', '<leader>fr', builtin.registers, { desc = 'Telescope registers' })
       Map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
     end
   },
