@@ -25,6 +25,12 @@ return {
             '~/Projects',
             '~/.config/nvim'
           },
+        },
+        file_browser = {
+          -- hidden      = true, -- toggle with ctrl-h
+          grouped       = true,
+          prompt_path   = true,
+          select_buffer =true,
         }
       }
     },
