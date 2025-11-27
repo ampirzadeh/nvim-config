@@ -26,12 +26,12 @@ return {
             '~/.config/nvim'
           },
         },
-        file_browser = {
-          -- hidden      = true, -- toggle with ctrl-h
-          grouped       = true,
-          prompt_path   = true,
-          select_buffer =true,
-        }
+        -- file_browser = {
+        --   -- hidden      = true, -- toggle with ctrl-h
+        --   grouped       = true,
+        --   prompt_path   = true,
+        --   select_buffer =true,
+        -- }
       }
     },
     config = function(_, opts)
@@ -39,7 +39,7 @@ return {
       telescope.setup(opts)
       telescope.load_extension('project')
       telescope.load_extension('fzf')
-      telescope.load_extension('file_browser')
+      -- telescope.load_extension('file_browser')
 
       local Map = require("amp.remaps")
       local builtin = require("telescope.builtin")
@@ -49,7 +49,7 @@ return {
       Map('n', '<C-f>', builtin.live_grep, { desc = 'Telescope live grep' })
       Map('n', '<leader>p', function() extensions.project.project { display_type = 'full' } end,
         { desc = 'Telescope open project' })
-      Map('n', '<C-b>', extensions.file_browser.file_browser, { desc = 'Telescope file browser' })
+      -- Map('n', '<C-b>', extensions.file_browser.file_browser, { desc = 'Telescope file browser' })
       Map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
       Map('n', '<leader>fr', builtin.registers, { desc = 'Telescope registers' })
       Map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
@@ -60,10 +60,10 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim" },
     build = "make",
   },
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" }
-  },
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   dependencies = { "nvim-telescope/telescope.nvim" }
+  -- },
   {
     'nvim-telescope/telescope-project.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
