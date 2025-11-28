@@ -53,6 +53,14 @@ return {
       })
 
       vim.diagnostic.config({
+        float = {
+          focusable = false,
+          style = "minimal",
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
         virtual_text = true, -- Show diagnostics inline with the code
         signs = true,        -- Show signs in the gutter
         underline = true,    -- Underline problematic code
