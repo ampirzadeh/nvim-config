@@ -61,8 +61,8 @@ Map("t", "<C-Right>", ":vertical resize +2<CR>")
 Map("n", "J", "mzJ`z")
 
 -- Search and replace entire word in normal mode
-Map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]])
+Map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]])
 -- Search and replace entire selection in visual mode
-Map("v", "<leader>r", [["hy:%s/<C-r>h//g<Left><Left><Left>]])
+Map("v", "<leader>r", [["hy:%s/<C-r>h//g<Left><Left>]])
 
 return Map;
