@@ -12,9 +12,10 @@ Map({ "i", "n" }, "<C-s>", "<Esc>:w<CR>")
 Map('i', '<C-v>', '<C-r>+')
 
 -- Buffer management
-Map('n', '<leader>x', ':bd<CR>')
-Map('n', '<Tab>', ':bnext<CR>')
-Map('n', '<S-Tab>', ':bprevious<CR>')
+Map('n', '<leader>x', ':bd<CR>') -- Close current buffer
+Map("n", "<leader><leader>", "<C-^>") -- Toggle between most recently used buffer
+Map('n', '<Tab>', ':bnext<CR>') -- Next buffer
+Map('n', '<S-Tab>', ':bprevious<CR>') -- Previous Buffer
 
 -- Move codeblocks around wtih Alt + hjkl
 Map('n', "<A-j>", ":m .+1<CR>==")
