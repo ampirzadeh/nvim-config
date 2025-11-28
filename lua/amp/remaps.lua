@@ -38,7 +38,7 @@ Map("n", "<C-j>", "<C-w>j")
 Map("n", "<C-k>", "<C-w>k")
 Map("n", "<C-l>", "<C-w>l")
 
--- terminal
+-- Terminal
 Map("t", "<C-h>", ":wincmd h<CR>")
 Map("t", "<C-j>", ":wincmd j<CR>")
 Map("t", "<C-k>", ":wincmd k<CR>")
@@ -50,10 +50,18 @@ Map("n", "<C-Down>", ":resize +2<CR>")
 Map("n", "<C-Left>", ":vertical resize -2<CR>")
 Map("n", "<C-Right>", ":vertical resize +2<CR>")
 
--- terminal
+-- Terminal
 Map("t", "<C-Up>", ":resize -2<CR>")
 Map("t", "<C-Down>", ":resize +2<CR>")
 Map("t", "<C-Left>", ":vertical resize -2<CR>")
 Map("t", "<C-Right>", ":vertical resize +2<CR>")
+
+-- Join line, keeping the cursor position
+Map("n", "J", "mzJ`z")
+
+-- Search and replace entire word in normal mode
+Map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]])
+-- Search and replace entire selection in visual mode
+Map("v", "<leader>r", [["hy:%s/<C-r>h//g<Left><Left><Left>]])
 
 return Map;
