@@ -1,3 +1,26 @@
+local Map = require("amp.remaps")
+
+-- LspAttach is where you enable features that only work
+-- if there is a language server active in the file
+vim.api.nvim_create_autocmd("LspAttach", {
+  desc = 'LSP actions',
+  callback = function(event)
+    local opts = { buffer = event.buf }
+
+    Map("n", "<leader>d", vim.diagnostic.open_float, opts)
+    Map("n", "K", vim.lsp.buf.hover, opts)
+    Map("n", "gd", vim.lsp.buf.definition, opts)
+    Map("n", "gD", vim.lsp.buf.declaration, opts)
+    Map("n", "gi", vim.lsp.buf.implementation, opts)
+    Map("n", "go", vim.lsp.buf.type_definition, opts)
+    Map("n", "gr", vim.lsp.buf.references, opts)
+    Map("n", "gs", vim.lsp.buf.signature_help, opts)
+    Map("n", '<F2>', vim.lsp.buf.rename, opts)
+    Map("n", '<A-x>', function() vim.lsp.buf.format { async = true } end, opts)
+    Map("n", '<F4>', vim.lsp.buf.code_action, opts)
+  end,
+})
+
 return {
   {
     "S1M0N38/love2d.nvim",
@@ -95,76 +118,20 @@ return {
   },
   -- LSP
   {
-    'neovim/nvim-lspconfig',
-    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    "mason-org/mason.nvim",
+    opts = {},
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
-      {
-        "williamboman/mason.nvim",
-        build = ":MasonUpdate",
-        init = function() require('mason').setup() end
-      },
-      { "williamboman/mason-lspconfig.nvim", config = function() end },
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
     },
+    opts = {},
     init = function()
       -- Reserve a space in the gutter
       -- This will avoid an annoying layout shift in the screen
       vim.opt.signcolumn = "yes"
     end,
-    config = function()
-      local lsp_defaults = require("lspconfig").util.default_config
-
-      -- Add cmp_nvim_lsp capabilities settings to lspconfig
-      -- This should be executed before you configure any language server
-      lsp_defaults.capabilities = vim.tbl_deep_extend(
-        "force",
-        lsp_defaults.capabilities,
-        require("cmp_nvim_lsp").default_capabilities()
-      )
-
-      -- LspAttach is where you enable features that only work
-      -- if there is a language server active in the file
-      vim.api.nvim_create_autocmd("LspAttach", {
-        desc = 'LSP actions',
-        callback = function(event)
-          local Map = require("amp.remaps")
-          local opts = { buffer = event.buf }
-
-          Map("n", "<leader>d", vim.diagnostic.open_float, opts)
-          Map("n", "K", vim.lsp.buf.hover, opts)
-          Map("n", "gd", vim.lsp.buf.definition, opts)
-          Map("n", "gD", vim.lsp.buf.declaration, opts)
-          Map("n", "gi", vim.lsp.buf.implementation, opts)
-          Map("n", "go", vim.lsp.buf.type_definition, opts)
-          Map("n", "gr", vim.lsp.buf.references, opts)
-          Map("n", "gs", vim.lsp.buf.signature_help, opts)
-          Map("n", '<F2>', vim.lsp.buf.rename, opts)
-          Map("n", '<A-x>', function() vim.lsp.buf.format { async = true } end, opts)
-          Map("n", '<F4>', vim.lsp.buf.code_action, opts)
-        end,
-      })
-
-      require('mason-lspconfig').setup({
-        automatic_installation = true,
-        ensure_installed = {},
-        handlers = {
-          -- this first function is the "default handler"
-          -- it applies to every language server without a "custom handler"
-          function(server_name)
-            require("lspconfig")[server_name].setup({})
-          end,
-          ['lua_ls'] = function()
-            require('lspconfig').lua_ls.setup({
-              settings = {
-                Lua = {
-                  -- runtime = { version = 'LuaJIT' },
-                  diagnostics = { globals = { 'vim' } },
-                  telemetry = { enable = false },
-                },
-              },
-            })
-          end
-        }
-      })
-    end
   }
 }
