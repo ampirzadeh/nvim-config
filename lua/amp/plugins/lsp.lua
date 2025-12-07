@@ -1,5 +1,10 @@
 return {
   {
+    "S1M0N38/love2d.nvim",
+    event = "VeryLazy",
+    version = "2.*",
+  },
+  {
     "L3MON4D3/LuaSnip",
     dependencies = { "rafamadriz/friendly-snippets" },
     config = function()
@@ -150,15 +155,8 @@ return {
             require('lspconfig').lua_ls.setup({
               settings = {
                 Lua = {
-                  runtime = { version = 'LuaJIT' },
+                  -- runtime = { version = 'LuaJIT' },
                   diagnostics = { globals = { 'vim' } },
-                  workspace = {
-                    library = {
-                      vim.api.nvim_get_runtime_file("", true),
-                      "${3rd}/love2d/library",
-                    },
-                    checkThirdParty = false,
-                  },
                   telemetry = { enable = false },
                 },
               },
