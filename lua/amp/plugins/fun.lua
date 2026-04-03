@@ -2,11 +2,9 @@
 return {
   {
     'eandrju/cellular-automaton.nvim',
-    config = function()
-      local Map = require("amp.remaps")
-
-      Map("n", "<leader>ff", "<cmd>CellularAutomaton make_it_rain<CR>")
-      Map("n", "<leader>fml", "<cmd>CellularAutomaton scramble<CR>")
-    end,
+    keys = {
+      { "<leader>ff",  "<cmd>CellularAutomaton make_it_rain<CR>", desc = "Make it rain" },
+      { "<leader>fml", "<cmd>CellularAutomaton scramble<CR>",     desc = "Scramble" }
+    },
   }
 }

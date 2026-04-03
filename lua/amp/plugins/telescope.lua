@@ -10,6 +10,13 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
+    keys = {
+      { '<C-p>',      "<cmd>Telescope find_files<CR>", desc = 'Telescope find files' },
+      { '<C-f>',      "<cmd>Telescope live_grep<CR>",  desc = 'Telescope live grep' },
+      { '<leader>fb', "<cmd>Telescope buffers<CR>",    desc = 'Telescope buffers' },
+      { '<leader>fr', "<cmd>Telescope registers<CR>",  desc = 'Telescope registers' },
+      { '<leader>fh', "<cmd>Telescope help_tags<CR>",  desc = 'Telescope help tags' },
+    },
     opts = {
       defaults = {
         sorting_strategy = "ascending",
@@ -41,33 +48,19 @@ return {
         -- }
       }
     },
-    config = function(_, opts)
-      local telescope = require('telescope')
-      telescope.setup(opts)
-      telescope.load_extension('project')
-      telescope.load_extension('fzf')
-      -- telescope.load_extension('file_browser')
-
-      local Map = require("amp.remaps")
-      local builtin = require("telescope.builtin")
-      local extensions = telescope.extensions
-
-      Map('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
-      Map('n', '<C-f>', builtin.live_grep, { desc = 'Telescope live grep' })
-      Map('n', '<leader>p', function() extensions.project.project { display_type = 'full' } end,
-        { desc = 'Telescope open project' })
-      -- Map('n', '<C-b>', extensions.file_browser.file_browser, { desc = 'Telescope file browser' })
-      Map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-      Map('n', '<leader>fr', builtin.registers, { desc = 'Telescope registers' })
-      Map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-    end
   },
   -- {
   --   "nvim-telescope/telescope-file-browser.nvim",
   --   dependencies = { "nvim-telescope/telescope.nvim" }
+  --   keys = {
+  --     { '<C-b>', "<cmd>Telescope file_browser.file_browser<CR>", desc = 'Telescope file browser' },
+  --   }
   -- },
   {
     'nvim-telescope/telescope-project.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
+    keys = {
+      { '<leader>p', ":lua require'telescope'.extensions.project.project{ display_type = 'full' }<CR>", desc = 'Telescope open project' },
+    }
   }
 }

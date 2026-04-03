@@ -1,8 +1,6 @@
 return {
   "mbbill/undotree",
-  config = function()
-    local Map = require("amp.remaps")
-
-    Map('n', 'U', ":UndotreeToggle<CR>")
-  end,
+  keys = {
+    { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Toggle Undotree" }
+  }
 }
