@@ -22,41 +22,32 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 return {
+  -- Love2d
   {
     "S1M0N38/love2d.nvim",
-    event = "VeryLazy",
-    version = "2.*",
     opts = {},
-  },
-  {
-    "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    config = function()
-      require("luasnip.loaders.from_vscode").lazy_load() -- Load VS Code-style snippets
-    end,
+    keys = {
+      { "<leader>lr", "<cmd>LoveRun<cr>",  ft = "lua",   desc = "Run LÖVE" },
+      { "<leader>ls", "<cmd>LoveStop<cr>", ft = "lua",   desc = "Stop LÖVE" },
+    },
   },
   -- Autocompletion
   {
     'hrsh7th/nvim-cmp',
-    version = false, -- last release is way too old
-    event = "InsertEnter",
     dependencies = {
+      'neovim/nvim-lspconfig',
       "hrsh7th/cmp-nvim-lsp",
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-cmdline',
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "onsails/lspkind.nvim",
     },
     config = function()
       local cmp = require("cmp")
-      local luasnip = require("luasnip")
-      local lspkind = require('lspkind')
 
       cmp.setup({
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = lspkind.cmp_format({ mode = "symbol" })
         },
         -- experimental = {
         --   ghost_text = true,
@@ -69,50 +60,16 @@ return {
           { name = "nvim_lsp_signature_help" },
           { name = "buffer" },
           { name = "path" },
-          { name = "luasnip" }
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<Esc>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if luasnip.expandable() then
-                luasnip.expand()
-              else
-                cmp.confirm({
-                  select = true,
-                })
-              end
-            else
-              fallback()
-            end
-          end),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.locally_jumpable(1) then
-              luasnip.jump(1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
+          ['<CR>'] = cmp.mapping.confirm(),
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
         }),
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end,
-        },
       })
     end
   },
