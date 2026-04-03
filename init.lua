@@ -6,5 +6,6 @@ vim.cmd("filetype plugin indent on")
 require("amp.settings")
 require("amp.lazy")
 require("amp.remaps")
+require("amp.autocmds")
 
 vim.cmd.colorscheme("onedark")
