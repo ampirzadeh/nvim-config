@@ -12,9 +12,9 @@ Map({ "i", "n" }, "<C-s>", "<Esc>:w<CR>")
 Map('i', '<C-v>', '<C-r>+')
 
 -- Buffer management
-Map('n', '<leader>x', ':bd<CR>') -- Close current buffer
+Map('n', '<leader>x', ':bd<CR>')      -- Close current buffer
 Map("n", "<leader><leader>", "<C-^>") -- Toggle between most recently used buffer
-Map('n', '<Tab>', ':bnext<CR>') -- Next buffer
+Map('n', '<Tab>', ':bnext<CR>')       -- Next buffer
 Map('n', '<S-Tab>', ':bprevious<CR>') -- Previous Buffer
 
 -- Move codeblocks around wtih Alt + hjkl
@@ -33,7 +33,7 @@ Map('v', "<A-j>", ":m '>+1<CR>gv=gv")
 Map('v', "<A-Up>", ":m '<-2<CR>gv=gv")
 Map('v', "<A-Down>", ":m '>+1<CR>gv=gv")
 
--- Move around with Ctrl + hjkl
+-- Move around split buffers with Ctrl + hjkl
 Map("n", "<C-h>", "<C-w>h")
 Map("n", "<C-j>", "<C-w>j")
 Map("n", "<C-k>", "<C-w>k")
@@ -45,7 +45,7 @@ Map("t", "<C-j>", ":wincmd j<CR>")
 Map("t", "<C-k>", ":wincmd k<CR>")
 Map("t", "<C-l>", ":wincmd l<CR>")
 
--- Resize with Ctrl + direction keys
+-- Resize split buffers with Ctrl + direction keys
 Map("n", "<C-Up>", ":resize -2<CR>")
 Map("n", "<C-Down>", ":resize +2<CR>")
 Map("n", "<C-Left>", ":vertical resize -2<CR>")
@@ -61,8 +61,17 @@ Map("t", "<C-Right>", ":vertical resize +2<CR>")
 Map("n", "J", "mzJ`z")
 
 -- Search and replace entire word in normal mode
-Map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]])
+Map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]], { silent = false })
 -- Search and replace entire selection in visual mode
-Map("v", "<leader>r", [["hy:%s/<C-r>h//g<Left><Left>]])
+Map("v", "<leader>r", [["hy:%s/<C-r>h//g<Left><Left>]], { silent = false })
+
+-- Open buffer horizontally and vertically
+Map("n", "<leader>v", ":split<CR>")
+Map("n", "<leader>h", ":vsplit<CR>")
+
+Map("n", "<leader>ih", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")
+end)
 
 return Map;
