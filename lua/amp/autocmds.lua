@@ -75,47 +75,30 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
   end,
 })
 
--- treesitter-modules takes care of this
--- see plugins/treesitter.lua for my rant
+-- Thanks to https://github.com/MeanderingProgrammer
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('treesitter.setup', {}),
+  callback = function(ev)
+    local buf = ev.buf
 
--- local function start_treesitter(buf, lang)
---   vim.treesitter.start(buf)
---   vim.bo[buf].syntax = "ON"
---   if vim.treesitter.query.get(lang, "indents") then
---     vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
---   end
--- end
+    -- disable treesitter for files larger than:
+    local max_filesize = 100 * 1024 -- 100 KB
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+    if ok and stats and stats.size > max_filesize then
+      return true
+    end
 
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "*" },
---   callback = function(ev)
---     local buf = ev.buf
---
---     -- disable treesitter for files larger than:
---     local max_filesize = 100 * 1024 -- 100 KB
---     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
---     if ok and stats and stats.size > max_filesize then
---       return true
---     end
---
---     local lang = vim.treesitter.language.get_lang(ev.match) -- use ev.match (filetype) as fallback
---
---     if not lang then
---       vim.notify("Couldn't detect treesitter language", vim.log.levels.WARN)
---       return
---     end
---
---     local ts = require("nvim-treesitter")
---     -- if language is installed, start treesitter
---     if vim.tbl_contains(ts.get_installed(), lang) then
---       start_treesitter(buf, lang)
---     elseif vim.tbl_contains(ts.get_available(), lang) then
---       -- if language is not installed but it is available, install and start it
---       ts.install({ lang })
---       start_treesitter(buf, lang)
---     else
---       -- vim.notify("Treesitter language for " .. ev.match .. " is not installed nor available", vim.log.levels.WARN)
---       return
---     end
---   end,
--- })
+    -- avoid running on buffers that do not correspond to a language (like oil.nvim buffers)
+    local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+    if not vim.treesitter.language.add(lang) then
+      return
+    end
+
+    -- enable treesitter
+    if not vim.treesitter.start(buf, lang) then
+      return
+    end
+
+    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})

@@ -74,4 +74,50 @@ Map("n", "<leader>ih", function()
   vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")
 end)
 
+
+local function shrink_node()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require 'vim.treesitter._select'.select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end
+
+local function expand_node()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require 'vim.treesitter._select'.select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end
+
+-- goto next/previous treesitter node
+-- useful for function parameters/arguments, if/then/else blocks, etc
+Map({ 'x' }, '[[', function()
+  require 'vim.treesitter._select'.select_prev(vim.v.count1)
+end, { desc = 'Select previous treesitter node' })
+
+Map({ 'x' }, ']]', function()
+  require 'vim.treesitter._select'.select_next(vim.v.count1)
+end, { desc = 'Select next treesitter node' })
+
+-- Incremental selection
+-- Thanks to https://pawelgrzybek.com/nvim-incremental-selection/
+-- Normal mode:
+-- <CR> to select parent node
+-- <S-CR> to select child node
+--
+-- Visual mode:
+-- <CR> or <Tab> to expand to parent node
+-- <S-CR> or <S-Tab> to shrink tochild node
+Map({ 'x', 'o' }, '<Tab>', expand_node,
+  { desc = 'Select parent treesitter node or outer incremental lsp selections' })
+Map({ 'x', 'o', 'n' }, '<CR>', expand_node,
+  { desc = 'Select parent treesitter node or outer incremental lsp selections' })
+
+Map({ 'x', 'o' }, '<S-Tab>', shrink_node,
+  { desc = 'Select child treesitter node or inner incremental lsp selections' })
+Map({ 'x', 'o', 'n' }, '<S-CR>', shrink_node,
+  { desc = 'Select child treesitter node or inner incremental lsp selections' })
+
 return Map;
