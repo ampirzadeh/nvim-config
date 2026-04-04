@@ -20,11 +20,11 @@ o.scrolloff = 4                  -- keeps at least 4 lines visible above and bel
 o.termguicolors = true           -- enable 24-bit RGB colours
 
 -- Indentation
-o.autoindent = true                              -- copy indentation from current line when starting a new line
-o.expandtab = true                               -- use spaces instead of tabs
-o.shiftwidth = 2                                 -- number of spaces to use for each step of (auto)indent
-o.tabstop = 2                                    -- number of spaces a tab character visually occupies
-o.smartindent = true                             -- add extra indentation after {
+o.autoindent = true  -- copy indentation from current line when starting a new line
+o.expandtab = true   -- use spaces instead of tabs
+o.shiftwidth = 2     -- number of spaces to use for each step of (auto)indent
+o.tabstop = 2        -- number of spaces a tab character visually occupies
+o.smartindent = true -- add extra indentation after {
 
 -- File options
 o.swapfile = false                               -- disable swap files
@@ -50,4 +50,26 @@ vim.diagnostic.config({
   underline = true,    -- Underline problematic code
   update_in_insert = false,
   severity_sort = true,
+})
+
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require'
+        },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
 })
