@@ -35,7 +35,7 @@
         "n"
       ];
       key = "<CR>";
-      action.__raw = "expand_node";
+      action.__raw = ''function() if vim.bo.buftype == "quickfix" then vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true) else expand_node() end end'';
       options.desc = "Select parent node";
     }
     {
@@ -54,7 +54,7 @@
         "n"
       ];
       key = "<S-CR>";
-      action.__raw = "shrink_node";
+      action.__raw = ''function() if vim.bo.buftype == "quickfix" then vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true) else shrink_node() end end'';
       options.desc = "Select child node";
     }
 
