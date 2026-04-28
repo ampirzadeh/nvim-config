@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    # ./ai.nix
+    ./ai.nix
     ./fun.nix
     ./git.nix
     ./lsp.nix
