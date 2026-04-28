@@ -3,8 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nixvim.url = "github:nix-community/nixvim";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -35,10 +41,6 @@
           imports = [ nixvim.homeModules.nixvim ];
           programs.nixvim = {
             enable = true;
-            # viAlias = true;
-            # vimAlias = true;
-            # defaultEditor = true;
-            # nixpkgs.config.allowUnfree = true;
             imports = [ ./config.nix ];
           };
         };
