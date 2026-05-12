@@ -97,6 +97,7 @@
       markdown
       markdown_inline
       nix
+      ini
       bash
       lua
       vim
