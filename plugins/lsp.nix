@@ -21,7 +21,16 @@
       nil_ls.enable = true;
       gopls.enable = true;
       html.enable = true;
-      zls.enable = true;
+      zls = {
+        enable = true;
+        config = {
+          settings = {
+            zls = {
+              enable_build_on_save = true;
+            };
+          };
+        };
+      };
     };
 
     keymaps = [
