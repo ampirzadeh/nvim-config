@@ -84,6 +84,7 @@
     grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
       c
       cpp
+      http
       vue
       go
       svelte

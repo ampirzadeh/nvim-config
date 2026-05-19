@@ -4,6 +4,7 @@
     ./ai.nix
     ./fun.nix
     ./git.nix
+    ./http.nix
     ./lsp.nix
     ./lualine.nix
     ./marks.nix
