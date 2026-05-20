@@ -14,12 +14,17 @@
   };
 
   outputs =
-    { nixpkgs, nixvim, ... }@inputs:
+    {
+      nixpkgs,
+      neovim-nightly-overlay,
+      nixvim,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
+        overlays = [ neovim-nightly-overlay.overlays.default ];
       };
 
       nvimConfig = nixvim.legacyPackages.${system}.makeNixvimWithModule {
@@ -36,11 +41,18 @@
 
       # used by your HM flake
       homeManagerModules.default =
-        { pkgs, ... }:
+        { ... }:
+        let
+          nightly-pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [ neovim-nightly-overlay.overlays.default ];
+          };
+        in
         {
           imports = [ nixvim.homeModules.nixvim ];
           programs.nixvim = {
             enable = true;
+            package = nightly-pkgs.neovim;
             imports = [ ./config.nix ];
           };
         };
