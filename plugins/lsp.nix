@@ -21,6 +21,7 @@
       nil_ls.enable = true;
       gopls.enable = true;
       html.enable = true;
+      ols.enable = true;
       zls = {
         enable = true;
         config = {

@@ -105,6 +105,7 @@
       dockerfile
       gitignore
       rust
+      odin
       zig
     ];
   };
