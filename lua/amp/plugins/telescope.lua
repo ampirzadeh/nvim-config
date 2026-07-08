@@ -13,6 +13,7 @@ return {
     keys = {
       { '<C-p>',      "<cmd>Telescope find_files<CR>", desc = 'Telescope find files' },
       { '<C-f>',      "<cmd>Telescope live_grep<CR>",  desc = 'Telescope live grep' },
+      { '<C-t>',      "<cmd>Telescope treesitter<CR>", desc = 'Telescope treesitter' },
       { '<leader>fb', "<cmd>Telescope buffers<CR>",    desc = 'Telescope buffers' },
       { '<leader>fr', "<cmd>Telescope registers<CR>",  desc = 'Telescope registers' },
       { '<leader>fh', "<cmd>Telescope help_tags<CR>",  desc = 'Telescope help tags' },
