@@ -2,6 +2,8 @@ local g = vim.g
 local o = vim.opt
 
 -- Global options
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 g.mapleader = " "
 g.maplocalleader = ","
 
@@ -17,6 +19,7 @@ o.title = true                   -- set the title of the terminal window to the 
 o.hlsearch = false               -- disable persistent search highlights
 o.incsearch = true               -- highlights matches incrementally as they're being typed
 o.scrolloff = 4                  -- keeps at least 4 lines visible above and below the cursor
+o.signcolumn = "yes:2";          -- keep two columns of space to the left of line numbers
 o.termguicolors = true           -- enable 24-bit RGB colours
 
 -- Indentation
@@ -34,23 +37,6 @@ o.undofile = true                                -- enable persistent undo to al
 
 -- Clipboard
 o.clipboard = "unnamedplus" -- use the system clipboard
-
--- Diagnostics UI
-vim.diagnostic.config({
-  float = {
-    focusable = false,
-    style = "minimal",
-    border = "rounded",
-    source = true, -- always show source
-    header = "",
-    prefix = "",
-  },
-  virtual_text = true, -- Show diagnostics inline with the code
-  signs = true,        -- Show signs in the gutter
-  underline = true,    -- Underline problematic code
-  update_in_insert = false,
-  severity_sort = true,
-})
 
 vim.lsp.config('lua_ls', {
     settings = {
