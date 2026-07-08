@@ -1,5 +1,6 @@
 return {
   "OXY2DEV/markview.nvim",
+  enabled = false,
   lazy = false,
   preview = {
     icon_provider = "devicons", -- "internal", "mini" or "devicons"
