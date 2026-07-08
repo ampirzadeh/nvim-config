@@ -6,6 +6,7 @@ function Map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
+
 Map("n", ";", ":", { desc = "Enter command mode" })
 Map({ "i", "n" }, "<C-s>", "<Esc>:w<CR>", { desc = "Write buffer" })
 
@@ -29,7 +30,8 @@ end
 local global_marks = { "q", "w", "e", "r", "t", "y" }
 for _, mark in ipairs(global_marks) do
   Map("n", "m" .. mark, "<cmd>mark " .. mark:upper() .. "<CR>", { desc = "Set mark (QWERTY are always global)" })
-  Map("n", "'" .. mark, "<cmd>normal! '" .. mark:upper() .. "<CR>", { desc = "Jump to mark (QWERTY are always global)" })
+  Map("n", "'" .. mark, "<cmd>normal! '" .. mark:upper() .. "<CR>",
+    { desc = "Jump to mark (QWERTY are always global)" })
 end
 
 -- Move codeblocks around wtih Alt + hjkl

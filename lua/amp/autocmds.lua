@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
   desc = "highlight selection on yank",
   callback = function()
-    vim.hl.on_yank({ timeout = 200, visual = true })
+    vim.hl.hl_op({ timeout = 200, visual = true })
   end,
 })
 
@@ -61,6 +61,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- syntax highlighting for dotenv files
 vim.api.nvim_create_autocmd("BufRead", {
   group = vim.api.nvim_create_augroup("dotenv_ft", { clear = true }),
+  desc = "Set correct filetype for dotenv files",
   pattern = { ".env", ".env.*" },
   callback = function()
     vim.bo.filetype = "dosini"
@@ -70,6 +71,7 @@ vim.api.nvim_create_autocmd("BufRead", {
 -- show cursorline only in active window enable
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
   group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
+  desc = "Highlight cursor line on active buffer",
   callback = function()
     vim.opt_local.cursorline = true
   end,
@@ -78,6 +80,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 -- show cursorline only in active window disable
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
   group = "active_cursorline",
+  desc = "Clear highlight of cursor line when leaving the buffer",
   callback = function()
     vim.opt_local.cursorline = false
   end,
@@ -95,7 +98,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
       for _, client in ipairs(clients) do
         if client.server_capabilities.documentHighlightProvider then
           supports_highlight = true
-          break -- Found a supporting client, no need to check others
+          break           -- Found a supporting client, no need to check others
         end
       end
 
@@ -124,7 +127,7 @@ vim.api.nvim_create_autocmd("FileType", {
     local buf = ev.buf
 
     -- disable treesitter for files larger than:
-    local max_filesize = 100 * 1024 -- 100 KB
+    local max_filesize = 100 * 1024     -- 100 KB
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
     if ok and stats and stats.size > max_filesize then
       return true
