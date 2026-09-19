@@ -30,32 +30,32 @@ o.tabstop = 2        -- number of spaces a tab character visually occupies
 o.smartindent = true -- add extra indentation after {
 
 -- File options
-o.swapfile = false                               -- disable swap files
-o.backup = false                                 -- disable backup files
-o.undodir = os.getenv("HOME") .. "/.vim/undodir" -- save undo history
-o.undofile = true                                -- enable persistent undo to allow undoing after closing a file
+o.swapfile = false                             -- disable swap files
+o.backup = false                               -- disable backup files
+o.undodir = vim.fn.stdpath("state") .. "/undo" -- save undo history
+o.undofile = true                              -- enable persistent undo to allow undoing after closing a file
 
 -- Clipboard
 o.clipboard = "unnamedplus" -- use the system clipboard
 
 vim.lsp.config('lua_ls', {
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = {
-                    'vim',
-                    'require'
-                },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            telemetry = {
-                enable = false,
-            },
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require'
         },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
     },
+  },
 })
