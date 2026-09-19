@@ -90,7 +90,7 @@ Map("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hi
 
 local function shrink_node()
   if vim.treesitter.get_parser(nil, nil, { error = false }) then
-    require 'vim.treesitter._select'.select_child(vim.v.count1)
+    vim.treesitter.select("child", vim.v.count1)
   else
     vim.lsp.buf.selection_range(-vim.v.count1)
   end
@@ -98,7 +98,7 @@ end
 
 local function expand_node()
   if vim.treesitter.get_parser(nil, nil, { error = false }) then
-    require 'vim.treesitter._select'.select_parent(vim.v.count1)
+    vim.treesitter.select("parent", vim.v.count1)
   else
     vim.lsp.buf.selection_range(vim.v.count1)
   end
@@ -107,11 +107,11 @@ end
 -- goto next/previous treesitter node
 -- useful for function parameters/arguments, if/then/else blocks, etc
 Map({ 'x' }, '[[', function()
-  require 'vim.treesitter._select'.select_prev(vim.v.count1)
+  vim.treesitter.select("prev", vim.v.count1)
 end, { desc = 'Select previous treesitter node' })
 
 Map({ 'x' }, ']]', function()
-  require 'vim.treesitter._select'.select_next(vim.v.count1)
+  vim.treesitter.select("next", vim.v.count1)
 end, { desc = 'Select next treesitter node' })
 
 -- Incremental selection
