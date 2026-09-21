@@ -18,6 +18,7 @@ local languages = {
   "dockerfile",
   "gitignore",
   "rust",
+  "odin",
   "zig"
 }
 
